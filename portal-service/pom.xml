@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>demo</artifactId>
+        <groupId>com.fh</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>portal-service</artifactId>
+    <packaging>jar</packaging>
+    <name>portal-service</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.fh</groupId>
+            <artifactId>portal-config</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fh</groupId>
+            <artifactId>portal-data-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xdh.frame</groupId>
+            <artifactId>frame-infrastructure-service</artifactId>
+            <version>${frame-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xdh.frame</groupId>
+            <artifactId>frame-infrastructure-service</artifactId>
+            <version>${frame-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xdh.frame</groupId>
+            <artifactId>frame-schedule</artifactId>
+            <version>${frame-version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.xdh.frame</groupId>
+            <artifactId>frame-shiro</artifactId>
+            <version>${frame-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xdh.frame</groupId>
+            <artifactId>frame-oss</artifactId>
+            <version>${frame-version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+
+    <build>
+        <plugins>
+
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <classesDirectory>target/classes/</classesDirectory>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.xdh.app.navigation.service.main.StartServer</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>.</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <type>jar</type>
+                            <includeTypes>jar</includeTypes>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+
+
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>

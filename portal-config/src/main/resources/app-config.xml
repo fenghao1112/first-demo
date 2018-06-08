@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+	default-lazy-init="true">
+
+	
+	
+	<bean id="xdh_PathMap" class="com.xdh.frame.core.listener.PathMap" lazy-init="false">
+		<property name="servletContextPathMap">
+			<map >
+				<entry key="navigationPath" value="context.path.navigation"></entry>
+				<entry key="apiPath" value="context.path.api"></entry>
+				<entry key="resourcePath" value="context.path.resources"></entry>
+				<entry key="serverBasePath" value="server.url.base"></entry>
+				<entry key="filePath" value="context.path.file"></entry>
+				<entry key="attachmentUrl" value="attachment.download.url"></entry>
+				<entry key="attachmentUploadUrl" value="attachment.upload.url"></entry>
+				<entry key="extAddOrg" value="org.showOrg"></entry>
+				<entry key="appId" value="app.id"></entry>
+			</map> 
+		</property>
+	</bean>
+	
+</beans>

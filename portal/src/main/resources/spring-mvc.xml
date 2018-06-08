@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd        
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+     	http://www.springframework.org/schema/aop 
+     	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+     	http://www.springframework.org/schema/tx 
+     	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/mvc 
+     	http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+	<import resource="classpath*:spring-context-core-mvc.xml" />
+
+	<context:component-scan base-package="com.fh"
+		use-default-filters="false">
+		<context:include-filter type="regex"
+			expression="com.xdh.app.navigation.api.controller.*" />
+		<context:include-filter type="regex"
+			expression="com.xdh.app.navigation.api.auth.*" />
+	</context:component-scan>
+
+
+	<context:annotation-config />
+	<mvc:default-servlet-handler />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json</value>
+					</list>
+				</property>
+				<property name="features">
+					<list>
+						<value>WriteMapNullValue</value>
+						<value>QuoteFieldNames</value>
+						<value>WriteDateUseDateFormat</value>
+						<!-- 禁用fastjson循环引用检测 -->
+						<value>DisableCircularReferenceDetect</value>
+					</list>
+				</property>
+			</bean>
+			<!-- <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> 
+				<property name="supportedMediaTypes"> <list> <value>text/html;charset=UTF-8</value> 
+				<value>application/json</value> </list> </property> </bean> -->
+
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+
+
+	<bean
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/page/" />
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1000000000" />
+	</bean>
+
+
+
+
+
+
+</beans>
