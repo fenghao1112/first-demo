@@ -20,9 +20,9 @@
 	<context:component-scan base-package="com.fh"
 		use-default-filters="false">
 		<context:include-filter type="regex"
-			expression="com.xdh.app.navigation.api.controller.*" />
+			expression="com.fh.api.controller.*" />
 		<context:include-filter type="regex"
-			expression="com.xdh.app.navigation.api.auth.*" />
+			expression="com.fh.api.auth.*" />
 	</context:component-scan>
 
 

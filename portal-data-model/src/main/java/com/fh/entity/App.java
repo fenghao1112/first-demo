@@ -1,4 +1,4 @@
-package com.fh;
+package com.fh.entity;
 
 /**
  * Hello world!

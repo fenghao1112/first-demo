@@ -1,7 +1,170 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+  http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1"  metadata-complete="false">
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath:spring-application-context.xml
+      classpath:spring-mvc.xml
+    </param-value>
+  </context-param>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <context-param>
+    <param-name>log4jRefreshInterval</param-name>
+    <param-value>600000</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>navigation-api</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <listener>
+    <listener-class>com.xdh.frame.infrastructure.listener.ServletContextListenerImpl</listener-class>
+  </listener>
+  <listener>
+    <listener-class>com.xdh.frame.infrastructure.listener.SessionListenerImpl</listener-class>
+  </listener>
+
+  <!-- 与CAS Single Sign Out Filter配合，注销登录信息  -->
+  <listener>
+    <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener
+    </listener-class>
+  </listener>
+  <!-- CAS Server 通知 CAS Client，删除session,注销登录信息 -->
+
+
+  <filter>
+    <filter-name>casSingleSignOutFilter</filter-name>
+    <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>casSingleSignOutFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
+  <!--  提供跨域支持 -->
+  <filter>
+    <filter-name>CORS</filter-name>
+    <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CORS</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--  提供跨域支持 -->
+
+
+
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- 配置Shiro过滤器,先让Shiro过滤系统接收到的请求 -->
+  <!-- 这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"/> -->
+  <!-- 使用[/*]匹配所有请求,保证所有的可控请求都经过Shiro的过滤 -->
+  <!-- 通常会将此filter-mapping放置到最前面(即其他filter-mapping前面),以保证它是过滤器链中第一个起作用的 -->
+  <filter>
+    <filter-name>shiroFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由servlet container管理 -->
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>shiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>xssFilter</filter-name>
+    <filter-class>com.xdh.frame.core.xss.XssFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>xssFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>dispatcher</servlet-name>
+    <servlet-class>
+      org.springframework.web.servlet.DispatcherServlet
+    </servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>dispatcher</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- <servlet>
+  <servlet-name>fileUploadServlet</servlet-name>
+  <servlet-class>com.xdh.frame.core.servlet.AttachmentUploadServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>fileUploadServlet</servlet-name>
+  <url-pattern>/servlet/fileUpload.servlet</url-pattern>
+</servlet-mapping>
+
+<servlet>
+  <servlet-name>fileDownloadServlet</servlet-name>
+  <servlet-class>
+      com.xdh.frame.core.servlet.AttachmentDownloadServlet
+  </servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>fileDownloadServlet</servlet-name>
+  <url-pattern>/servlet/fileDownloadServlet.servlet</url-pattern>
+</servlet-mapping> -->
+
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/errorpage/404.html</location>
+  </error-page>
+
+  <error-page>
+    <error-code>500</error-code>
+    <location>/errorpage/500.html</location>
+  </error-page>
+
 </web-app>

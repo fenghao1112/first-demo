@@ -16,25 +16,12 @@
 		</property>
 	</bean>
 	
-	
 
-	<!-- <import resource="classpath*:spring-jdbc.xml" />
-	<import resource="classpath*:spring-context-api.xml" />
-	<import resource="classpath*:spring-context-core.xml" />
-	<import resource="classpath*:spring-context-scheduler.xml" />
-	<import resource="classpath*:spring-context-gen.xml" />
-	<import resource="classpath*:app-service.xml" />
-	<import resource="classpath*:spring-cache.xml" />
-	<import resource="classpath*:xdh-framework-log-support.xml" /> -->
-	
-	
 
-	<import resource="classpath*:dubbo-consumer-config.xml" />
+	<import resource="classpath*:spring-jdbc.xml" />
 	<import resource="classpath*:app-config.xml" />
-	<!-- <import resource="classpath*:context-shiro-cas.xml" /> -->
-	<import resource="classpath*:spring-cache.xml" /> 
-	<import resource="classpath*:spring-context-shiro.xml" />
-	<import resource="classpath*:navigation-shiro.xml" />
-	<import resource="classpath*:xdh-framework-log-support.xml" />
+	<import resource="classpath*:app-service.xml" />
+	<!--<import resource="classpath*:spring-context-shiro.xml" />-->
+	<!--<import resource="classpath*:portal-shiro.xml" />-->
 	
 </beans>

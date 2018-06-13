@@ -1,4 +1,4 @@
-package com.fh;
+package com.fh.service;
 
 import static org.junit.Assert.assertTrue;
 
